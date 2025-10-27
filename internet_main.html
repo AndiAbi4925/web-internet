@@ -1,19 +1,378 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Let's talk about internet</title>
-    <link rel="stylesheet" src="internet_main.css">
+    <title>Cara Kerja Internet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #000;
+            color: #f5f5f7;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #f5f5f7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+            opacity: 0.8;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 113, 227, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.3; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+
+        .hero .subtitle {
+            font-size: 28px;
+            font-weight: 400;
+            color: #a1a1a6;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: #0071e3;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 980px;
+            font-size: 17px;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            background: #0077ed;
+            transform: scale(1.02);
+        }
+
+        /* Topics Grid */
+        .topics-section {
+            padding: 120px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            font-size: 21px;
+            color: #a1a1a6;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top, rgba(0, 113, 227, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 113, 227, 0.5);
+        }
+
+        .topic-card:hover::before {
+            opacity: 1;
+        }
+
+        .topic-icon {
+            font-size: 60px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .topic-card h3 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+
+        .topic-card p {
+            color: #a1a1a6;
+            font-size: 17px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        footer p {
+            color: #a1a1a6;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero .subtitle {
+                font-size: 21px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section-header h2 {
+                font-size: 36px;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 24px;
+            height: 40px;
+            border: 2px solid #f5f5f7;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            width: 4px;
+            height: 8px;
+            background: #f5f5f7;
+            border-radius: 2px;
+            transform: translateX(-50%);
+            animation: scroll 2s infinite;
+        }
+
+        @keyframes scroll {
+            0% { opacity: 1; top: 8px; }
+            100% { opacity: 0; top: 20px; }
+        }
+    </style>
 </head>
 <body>
-    <section class="header">
-        <div class="about-internet">
-            <h1>Let's talk about the internet</h1>
-            <p><strong>The Internet</strong> is a massive, global "network of networks" that connects billions of computers, phones, and other devices. It allows them to communicate and share data with each other. How it works: It operates using a set of rules called TCP/IP (Transmission Control Protocol/Internet Protocol). When you send or request data (like loading a webpage), that data is broken into small pieces called packets. Each packet is tagged with its destination and travels independently across the network, passed along by special computers called routers. These packets travel through your local Wi-Fi, your Internet Service Provider (ISP), and across a vast infrastructure of physical cables (including massive fiber-optic cables under the ocean) to a server. Once all the packets arrive, your device reassembles them to show you the complete webpage, video, or email.</p>
-            <img src="internet.png">
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <div class="logo">Internet Guide</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#topics">Topics</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Memahami<br>Cara Kerja Internet</h1>
+            <p class="subtitle">Panduan lengkap dan mudah dipahami<br>tentang teknologi di balik web</p>
+            <a href="#topics" class="cta-button">Mulai Belajar</a>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- Topics Section -->
+    <section class="topics-section" id="topics">
+        <div class="section-header">
+            <h2>Topik Pembahasan</h2>
+            <p>Eksplorasi mendalam tentang teknologi internet</p>
         </div>
         
+        <div class="topics-grid">
+            <div class="topic-card">
+                <div class="topic-icon">🌐</div>
+                <h3>Cara Kerja Internet</h3>
+                <p>Pahami bagaimana data bergerak melintasi dunia dalam hitungan detik melalui jaringan global</p>
+            </div>
 
+            <div class="topic-card">
+                <div class="topic-icon">🔒</div>
+                <h3>HTTP & HTTPS</h3>
+                <p>Protokol komunikasi yang mengatur pertukaran data antara browser dan server web</p>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-icon">📝</div>
+                <h3>Nama Domain</h3>
+                <p>Sistem penamaan yang membuat alamat web mudah diingat dan diakses oleh pengguna</p>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-icon">💾</div>
+                <h3>Web Hosting</h3>
+                <p>Layanan penyimpanan yang membuat website Anda dapat diakses di internet 24/7</p>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-icon">🗂️</div>
+                <h3>DNS</h3>
+                <p>Buku telepon internet yang menerjemahkan nama domain menjadi alamat IP</p>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-icon">🖥️</div>
+                <h3>Web Browser</h3>
+                <p>Aplikasi yang menerjemahkan kode menjadi halaman web interaktif yang Anda lihat</p>
+            </div>
+        </div>
     </section>
+
+    <!-- Footer -->
+    <footer id="about">
+        <p>© 2025 Internet Guide. Dibuat untuk tujuan edukasi.</p>
+        <p style="margin-top: 12px; font-size: 12px;">Memahami teknologi yang menghubungkan dunia</p>
+    </footer>
 </body>
 </html>
